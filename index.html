@@ -1,0 +1,306 @@
+sh<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Things</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #faf9f7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #2d2d2d;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .prompt {
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            color: #2d2d2d;
+            margin-bottom: 32px;
+        }
+
+        .answer {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.6;
+            text-align: center;
+            color: #5a5a5a;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.6s ease, max-height 0.6s ease, margin-top 0.6s ease;
+        }
+
+        .answer.visible {
+            opacity: 1;
+            max-height: 500px;
+            margin-top: 24px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        button {
+            background: #6b7d6a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #5a6c59;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button.secondary {
+            background: transparent;
+            color: #6b7d6a;
+            border: 1px solid #d4d4d4;
+        }
+
+        button.secondary:hover {
+            background: #f5f5f5;
+            border-color: #6b7d6a;
+        }
+
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        button:disabled:hover {
+            background: #6b7d6a;
+            transform: none;
+        }
+
+        button.secondary:disabled:hover {
+            background: transparent;
+        }
+
+        .footer {
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            margin-top: 40px;
+            font-weight: 300;
+        }
+
+        .fade-enter {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: pre-wrap;
+            animation: typing 1.5s steps(60, end);
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 100%;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card fade-enter">
+            <div class="prompt" id="prompt">Press the button below to begin</div>
+            <div class="answer" id="answer"></div>
+        </div>
+
+        <div class="button-group">
+            <button id="nextPromptBtn">Ask me something about Mali</button>
+            <button id="revealBtn" class="secondary" disabled>Reveal</button>
+        </div>
+
+        <div class="footer">made with love</div>
+    </div>
+
+    <script>
+        // The deck - easily edit these prompt/answer pairs
+        const deck = [
+            {
+                prompt: "What's your favorite thing about Mali?",
+                answer: "The way she lights up a room with her smile, and how she makes everyone around her feel seen and valued."
+            },
+            {
+                prompt: "What makes Mali unique?",
+                answer: "Her ability to find joy in the smallest moments and share that joy with everyone around her."
+            },
+            {
+                prompt: "What would you tell Mali if you could say anything?",
+                answer: "Thank you for being exactly who you are. Your kindness and authenticity make the world better."
+            },
+            {
+                prompt: "What's a memory with Mali you'll never forget?",
+                answer: "Every conversation where she truly listened, making me feel like the most important person in the world."
+            },
+            {
+                prompt: "What does Mali teach you?",
+                answer: "That being genuine and caring costs nothing, but means everything."
+            },
+            {
+                prompt: "How does Mali make difficult days better?",
+                answer: "Simply by being herself - her presence is a reminder that good people exist and kindness matters."
+            },
+            {
+                prompt: "What's Mali's superpower?",
+                answer: "Making people feel loved without even trying."
+            },
+            {
+                prompt: "Complete this sentence: Mali is...",
+                answer: "...a rare and beautiful soul who deserves all the happiness in the world."
+            }
+        ];
+
+        // State
+        let shuffledDeck = [];
+        let currentIndex = -1;
+        let isAnswerRevealed = false;
+
+        // Elements
+        const promptEl = document.getElementById('prompt');
+        const answerEl = document.getElementById('answer');
+        const nextPromptBtn = document.getElementById('nextPromptBtn');
+        const revealBtn = document.getElementById('revealBtn');
+
+        // Shuffle function
+        function shuffle(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Initialize shuffled deck
+        function initDeck() {
+            shuffledDeck = shuffle(deck);
+            currentIndex = -1;
+        }
+
+        // Show next prompt
+        function showNextPrompt() {
+            currentIndex++;
+
+            // Reset if we've gone through all cards
+            if (currentIndex >= shuffledDeck.length) {
+                shuffledDeck = shuffle(deck);
+                currentIndex = 0;
+            }
+
+            const card = shuffledDeck[currentIndex];
+
+            // Reset answer state
+            isAnswerRevealed = false;
+            answerEl.classList.remove('visible');
+            answerEl.textContent = '';
+
+            // Update prompt with fade animation
+            promptEl.style.opacity = '0';
+            setTimeout(() => {
+                promptEl.textContent = card.prompt;
+                promptEl.style.opacity = '1';
+                promptEl.style.transition = 'opacity 0.4s ease';
+            }, 200);
+
+            // Update button states
+            revealBtn.disabled = false;
+            nextPromptBtn.textContent = 'Next question';
+        }
+
+        // Reveal answer
+        function revealAnswer() {
+            if (isAnswerRevealed) return;
+
+            const card = shuffledDeck[currentIndex];
+            answerEl.textContent = card.answer;
+
+            // Show answer with fade-in
+            setTimeout(() => {
+                answerEl.classList.add('visible');
+            }, 50);
+
+            isAnswerRevealed = true;
+            revealBtn.disabled = true;
+        }
+
+        // Event listeners
+        nextPromptBtn.addEventListener('click', showNextPrompt);
+        revealBtn.addEventListener('click', revealAnswer);
+
+        // Initialize
+        initDeck();
+    </script>
+</body>
+</html>
