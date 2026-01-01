@@ -226,38 +226,42 @@ sh<!DOCTYPE html>
     <script>
         // The deck - easily edit these prompt/answer pairs
         const deck = [
-            {
-                prompt: "What's your favorite thing about Mali?",
-                answer: "The way she lights up a room with her smile, and how she makes everyone around her feel seen and valued."
-            },
-            {
-                prompt: "What makes Mali unique?",
-                answer: "Her ability to find joy in the smallest moments and share that joy with everyone around her."
-            },
-            {
-                prompt: "What would you tell Mali if you could say anything?",
-                answer: "Thank you for being exactly who you are. Your kindness and authenticity make the world better."
-            },
-            {
-                prompt: "What's a memory with Mali you'll never forget?",
-                answer: "Every conversation where she truly listened, making me feel like the most important person in the world."
-            },
-            {
-                prompt: "What does Mali teach you?",
-                answer: "That being genuine and caring costs nothing, but means everything."
-            },
-            {
-                prompt: "How does Mali make difficult days better?",
-                answer: "Simply by being herself - her presence is a reminder that good people exist and kindness matters."
-            },
-            {
-                prompt: "What's Mali's superpower?",
-                answer: "Making people feel loved without even trying."
-            },
-            {
-                prompt: "Complete this sentence: Mali is...",
-                answer: "...a rare and beautiful soul who deserves all the happiness in the world."
-            }
+            { id: 1, prompt: "What's your favorite thing about Mali?", answer: "TODO" },
+            { id: 2, prompt: "What's something about Mali you admire deeply?", answer: "TODO" },
+            { id: 3, prompt: "What's your favorite thing about the way Mali thinks?", answer: "TODO" },
+            { id: 4, prompt: "What's your favorite thing about Mali's personality?", answer: "TODO" },
+            { id: 5, prompt: "What's your favorite thing about being around Mali?", answer: "TODO" },
+            { id: 6, prompt: "What's something about Mali that makes you proud?", answer: "TODO" },
+            { id: 7, prompt: "What's your favorite thing about Mali that she doesn't notice?", answer: "TODO" },
+            { id: 8, prompt: "What's something about Mali that feels rare?", answer: "TODO" },
+            { id: 9, prompt: "What's your favorite thing about Mali being herself?", answer: "TODO" },
+            { id: 10, prompt: "What's your favorite thing about Mali that always stays consistent?", answer: "TODO" },
+            { id: 11, prompt: "What's your favorite thing about Mali when she's tired?", answer: "TODO" },
+            { id: 12, prompt: "What's your favorite thing about Mali when she's excited?", answer: "TODO" },
+            { id: 13, prompt: "What's your favorite thing about Mali when she's stressed?", answer: "TODO" },
+            { id: 14, prompt: "What's your favorite thing about Mali when she's focused?", answer: "TODO" },
+            { id: 15, prompt: "What's your favorite thing about Mali when she's being silly?", answer: "TODO" },
+            { id: 16, prompt: "What's your favorite thing about Mali when she's quiet?", answer: "TODO" },
+            { id: 17, prompt: "What's your favorite thing about Mali when she's confident?", answer: "TODO" },
+            { id: 18, prompt: "What's your favorite thing about Mali when she's unsure?", answer: "TODO" },
+            { id: 19, prompt: "What's your favorite thing about Mali at the end of a long day?", answer: "TODO" },
+            { id: 20, prompt: "What's your favorite thing about Mali when she's happy?", answer: "TODO" },
+            { id: 21, prompt: "What's your favorite Mali habit?", answer: "TODO" },
+            { id: 22, prompt: "What's a small thing Mali does that you love?", answer: "TODO" },
+            { id: 23, prompt: "What's your favorite thing about Mali's laugh?", answer: "TODO" },
+            { id: 24, prompt: "What's your favorite thing about Mali's voice?", answer: "TODO" },
+            { id: 25, prompt: "What's your favorite thing about Mali's sense of humor?", answer: "TODO" },
+            { id: 26, prompt: "What's your favorite thing about how Mali shows care?", answer: "TODO" },
+            { id: 27, prompt: "What's your favorite thing about Mali's curiosity?", answer: "TODO" },
+            { id: 28, prompt: "What's your favorite thing about Mali's kindness?", answer: "TODO" },
+            { id: 29, prompt: "What's something about Mali that makes you feel grounded?", answer: "TODO" },
+            { id: 30, prompt: "What's something about Mali that makes you feel understood?", answer: "TODO" },
+            { id: 31, prompt: "What's something about Mali that makes life feel lighter?", answer: "TODO" },
+            { id: 32, prompt: "What's something about Mali that makes hard days easier?", answer: "TODO" },
+            { id: 33, prompt: "What's something about Mali that makes you feel lucky?", answer: "TODO" },
+            { id: 34, prompt: "What's something about Mali that feels like home?", answer: "TODO" },
+            { id: 35, prompt: "What's your favorite thing about Mali that makes you go \"how are you real?\"", answer: "TODO" },
+            { id: 36, prompt: "What's one thing you love about Mali today?", answer: "TODO" }
         ];
 
         // State
@@ -272,7 +276,7 @@ sh<!DOCTYPE html>
         const revealBtn = document.getElementById('revealBtn');
         const cardEl = document.querySelector('.card');
 
-        // Shuffle function
+        // Shuffle function (Fisher-Yates)
         function shuffle(array) {
             const shuffled = [...array];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -284,7 +288,15 @@ sh<!DOCTYPE html>
 
         // Initialize shuffled deck
         function initDeck() {
-            shuffledDeck = shuffle(deck);
+            // Split deck into main cards (1-35) and final card (36)
+            const mainDeck = deck.slice(0, 35);  // Cards 1-35
+            const finalCard = deck[35];           // Card 36
+
+            // Shuffle only the main deck
+            const shuffledMain = shuffle(mainDeck);
+
+            // Combine: shuffled main + fixed final card
+            shuffledDeck = shuffledMain.concat(finalCard);
             currentIndex = -1;
         }
 
@@ -298,7 +310,7 @@ sh<!DOCTYPE html>
 
                 // Reset if we've gone through all cards
                 if (currentIndex >= shuffledDeck.length) {
-                    shuffledDeck = shuffle(deck);
+                    initDeck();  // Use initDeck to maintain card 36 at end
                     currentIndex = 0;
                 }
 
