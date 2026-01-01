@@ -224,44 +224,43 @@ sh<!DOCTYPE html>
     </div>
 
     <script>
-        // The deck - easily edit these prompt/answer pairs
         const deck = [
             { id: 1, prompt: "What's your favorite thing about Mali—right at the core?", answer: "TODO" },
             { id: 2, prompt: "Complete the sentence: \"Mali makes the world better by ___.\"", answer: "TODO" },
             { id: 3, prompt: "How does Mali make you feel understood—what does she do, specifically?", answer: "TODO" },
-            { id: 4, prompt: "What is something Mali does that most people don't notice, but you do?", answer: "TODO" },
+            { id: 4, prompt: "What is something Mali does that most people don't notice, but you do?", answer: "she always includes the person who got left out. not in a showy way, just... she notices. and does something about it." },
             { id: 5, prompt: "In one moment, what made you think: \"oh… I'm really into her\"?", answer: "TODO" },
-            { id: 6, prompt: "How, not just what: How does Mali show love when she's not trying to be obvious?", answer: "TODO" },
-            { id: 7, prompt: "Complete the sentence: \"One thing I admire about Mali is ___.\"", answer: "TODO" },
-            { id: 8, prompt: "What's a 'Mali trait' you hope never changes?", answer: "TODO" },
-            { id: 9, prompt: "What's something about Mali that you're proud of her for?", answer: "TODO" },
-            { id: 10, prompt: "What's one tiny detail about Mali that you find insanely cute?", answer: "TODO" },
-            { id: 11, prompt: "When Mali is tired, what's your favorite version of her?", answer: "TODO" },
-            { id: 12, prompt: "When Mali is excited, what do you love most about the way she lights up?", answer: "TODO" },
-            { id: 13, prompt: "When Mali is stressed, what do you admire about how she handles it?", answer: "TODO" },
-            { id: 14, prompt: "When Mali is locked in, what's your favorite thing about her focus?", answer: "TODO" },
-            { id: 15, prompt: "When Mali is being silly, what do you love about her humor?", answer: "TODO" },
-            { id: 16, prompt: "When Mali gets quiet, what do you find beautiful about that side of her?", answer: "TODO" },
+            { id: 6, prompt: "How, not just what: How does Mali show love when she's not trying to be obvious?", answer: "starting not fully formed questions to get my attention. 'if you were a vegetable...' 'tanks?'" },
+            { id: 7, prompt: "Complete the sentence: \"One thing I admire about Mali is ___.\"", answer: "her dedication and consistency even when it gets hard." },
+            { id: 8, prompt: "What's a 'Mali trait' you hope never changes?", answer: "her stubbornness. she just refuses to give up, even when it'd be way easier. that fire that's like 'nope, i'm not done yet.'" },
+            { id: 9, prompt: "What's something about Mali that you're proud of her for?", answer: "she'll complain the whole time, but she always gets it done. always. no matter what." },
+            { id: 10, prompt: "What's one tiny detail about Mali that you find insanely cute?", answer: "her big bug eyes that sparkle when she yaps. cannot be beat." },
+            { id: 11, prompt: "When Mali is tired, what's your favorite version of her?", answer: "when she sploots on me under the blanket but keeps one leg out because otherwise it's too hot. very specific. very mali." },
+            { id: 12, prompt: "When Mali is excited, what do you love most about the way she lights up?", answer: "she literally becomes a jumping bean. can't stay still. it's adorable." },
+            { id: 13, prompt: "When Mali is stressed, what do you admire about how she handles it?", answer: "she never takes it out on anyone (except me lol). keeps it contained, handles her business." },
+            { id: 14, prompt: "When Mali is locked in, what's your favorite thing about her focus?", answer: "she will straight up refuse my attempts to distract her. like i don't even exist. respect." },
+            { id: 15, prompt: "When Mali is being silly, what do you love about her humor?", answer: "it doesn't really make sense. it's just goofy happiness." },
+            { id: 16, prompt: "When Mali gets quiet, what do you find beautiful about that side of her?", answer: "honestly? nothing beautiful about it. if mali's quiet, something's wrong. it's foreboding." },
             { id: 17, prompt: "When Mali is confident, what do you notice first?", answer: "TODO" },
-            { id: 18, prompt: "When Mali is unsure, what do you love about her anyway?", answer: "TODO" },
-            { id: 19, prompt: "At the end of a long day, what about Mali feels like home?", answer: "TODO" },
-            { id: 20, prompt: "When Mali is happy, what's your favorite thing to witness?", answer: "TODO" },
-            { id: 21, prompt: "Complete the sentence: \"My favorite Mali habit is ___.\"", answer: "TODO" },
-            { id: 22, prompt: "What's a small thing Mali does that instantly improves your mood?", answer: "TODO" },
-            { id: 23, prompt: "What's your favorite thing about Mali's laugh—when does it show up?", answer: "TODO" },
-            { id: 24, prompt: "What's your favorite thing about Mali's voice (and when you hear it most)?", answer: "TODO" },
-            { id: 25, prompt: "What's something about Mali that always makes you smile?", answer: "TODO" },
+            { id: 18, prompt: "When Mali is unsure, what do you love about her anyway?", answer: "she doesn't pretend to have it figured out. she's just real about it." },
+            { id: 19, prompt: "At the end of a long day, what about Mali feels like home?", answer: "her daily recap. and scrolling through reels together before bed. just... routine. us." },
+            { id: 20, prompt: "When Mali is happy, what's your favorite thing to witness?", answer: "her happy dances. idk what else to say. they're just... the best." },
+            { id: 21, prompt: "Complete the sentence: \"My favorite Mali habit is ___.\"", answer: "no matter how incapacitated she is, her gcal will be filled." },
+            { id: 22, prompt: "What's a small thing Mali does that instantly improves your mood?", answer: "the way her face lights up after a good burrito. pure joy." },
+            { id: 23, prompt: "What's your favorite thing about Mali's laugh—when does it show up?", answer: "after a stupid reel. and then she slaps me until i pay attention and watch it too." },
+            { id: 24, prompt: "What's your favorite thing about Mali's voice (and when you hear it most)?", answer: "her excitement when she has a fun story to tell. she gets so into it." },
+            { id: 25, prompt: "What's something about Mali that always makes you smile?", answer: "she takes ownership of what she does." },
             { id: 26, prompt: "How does Mali show care in the little moments?", answer: "TODO" },
             { id: 27, prompt: "What's something you love about the way Mali thinks or reasons?", answer: "TODO" },
-            { id: 28, prompt: "What's something Mali does that proves she's kinder than she realizes?", answer: "TODO" },
-            { id: 29, prompt: "What's something about Mali that makes hard days easier?", answer: "TODO" },
-            { id: 30, prompt: "What's something about Mali that makes life feel lighter?", answer: "TODO" },
-            { id: 31, prompt: "What's something about Mali that feels rare to find in a person?", answer: "TODO" },
-            { id: 32, prompt: "What's a moment with Mali you replay sometimes (in a good way)?", answer: "TODO" },
-            { id: 33, prompt: "What's something about Mali that makes you feel lucky?", answer: "TODO" },
-            { id: 34, prompt: "If you had to describe Mali in three words, what are they—and why those?", answer: "TODO" },
-            { id: 35, prompt: "What's something about Mali that makes you go \"how are you real\"?", answer: "TODO" },
-            { id: 36, prompt: "What's one thing you love about Mali today?", answer: "TODO" }
+            { id: 28, prompt: "What's something Mali does that proves she's kinder than she realizes?", answer: "she puts more consideration into others than they put into her. every time." },
+            { id: 29, prompt: "What's something about Mali that makes hard days easier?", answer: "24/7 partner to rant to. she's just... there. always." },
+            { id: 30, prompt: "What's something about Mali that makes life feel lighter?", answer: "her whimsy and silly jokes. they're dumb. they're perfect." },
+            { id: 31, prompt: "What's something about Mali that feels rare to find in a person?", answer: "she's true to herself. completely. no pretending, no performance." },
+            { id: 32, prompt: "What's a moment with Mali you replay sometimes (in a good way)?", answer: "hehe" },
+            { id: 33, prompt: "What's something about Mali that makes you feel lucky?", answer: "she's a simple girl who makes me happy." },
+            { id: 34, prompt: "If you had to describe Mali in three words, what are they—and why those?", answer: "unyielding, talkative, gorjus. i think this goes without explanation." },
+            { id: 35, prompt: "What's something about Mali that makes you go \"how are you real\"?", answer: "she's beautiful, smart, hardworking, and silly all at once. how does that combination even exist." },
+            { id: 36, prompt: "What's one thing you love about Mali today?", answer: "her asking to sleep in just a little longer." }
         ];
 
         // State
@@ -288,9 +287,10 @@ sh<!DOCTYPE html>
 
         // Initialize shuffled deck
         function initDeck() {
-            // Split deck into main cards (1-35) and final card (36)
-            const mainDeck = deck.slice(0, 35);  // Cards 1-35
-            const finalCard = deck[35];           // Card 36
+            // Filter out TODO cards and split
+            const completedCards = deck.filter(card => card.answer !== "TODO");
+            const mainDeck = completedCards.slice(0, -1);  // All except last
+            const finalCard = completedCards[completedCards.length - 1];  // Card 36
 
             // Shuffle only the main deck
             const shuffledMain = shuffle(mainDeck);
