@@ -19,7 +19,7 @@ sh<!DOCTYPE html>
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #faf9f7;
+            background: radial-gradient(ellipse at 50% 30%, #fef6f8 0%, #fdf0f3 50%, #f8e4e9 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -29,6 +29,8 @@ sh<!DOCTYPE html>
             color: #2d2d2d;
             opacity: 0;
             animation: pageLoad 0.6s ease forwards;
+            overflow: hidden;
+            position: relative;
         }
 
         @keyframes pageLoad {
@@ -50,13 +52,16 @@ sh<!DOCTYPE html>
             flex-direction: column;
             align-items: center;
             gap: 24px;
+            position: relative;
+            z-index: 1;
         }
 
         .card {
-            background: white;
+            background: #fffbfc;
             border-radius: 16px;
             padding: 40px 32px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 16px rgba(180, 60, 80, 0.1);
+            border: 1px solid rgba(210, 130, 150, 0.15);
             width: 100%;
             min-height: 280px;
             display: flex;
@@ -64,6 +69,18 @@ sh<!DOCTYPE html>
             justify-content: center;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                         opacity 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4808f, #c45a6e, #d4808f, transparent);
         }
 
         .card.transitioning {
@@ -94,12 +111,50 @@ sh<!DOCTYPE html>
             }
         }
 
+        .prompt::after {
+            content: '\2661';
+            display: block;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #dba8b2;
+            letter-spacing: 8px;
+        }
+
+        .card-image {
+            width: calc(100% + 64px);
+            margin: -40px -32px 24px -32px;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 16px 16px 0 0;
+            display: none;
+        }
+
+        .card-image.visible {
+            display: block;
+        }
+
+        .card-image.photo-only {
+            margin: -40px -32px -40px -32px;
+            max-height: 400px;
+            border-radius: 16px;
+        }
+
+        @media (max-width: 380px) {
+            .card-image {
+                width: calc(100% + 48px);
+                margin: -32px -24px 20px -24px;
+            }
+            .card-image.photo-only {
+                margin: -32px -24px -32px -24px;
+            }
+        }
+
         .answer {
             font-size: 18px;
             font-weight: 300;
             line-height: 1.6;
             text-align: center;
-            color: #5a5a5a;
+            color: #6b5055;
             opacity: 0;
             max-height: 0;
             overflow: hidden;
@@ -126,7 +181,7 @@ sh<!DOCTYPE html>
         }
 
         button {
-            background: #6b7d6a;
+            background: #c45a6e;
             color: white;
             border: none;
             border-radius: 12px;
@@ -140,7 +195,7 @@ sh<!DOCTYPE html>
         }
 
         button:hover {
-            background: #5a6c59;
+            background: #b04d60;
         }
 
         button:active {
@@ -149,13 +204,13 @@ sh<!DOCTYPE html>
 
         button.secondary {
             background: transparent;
-            color: #6b7d6a;
-            border: 1px solid #d4d4d4;
+            color: #c45a6e;
+            border: 1px solid #e8c4ca;
         }
 
         button.secondary:hover {
-            background: #f5f5f5;
-            border-color: #6b7d6a;
+            background: #fdf2f4;
+            border-color: #c45a6e;
         }
 
         button:disabled {
@@ -164,7 +219,7 @@ sh<!DOCTYPE html>
         }
 
         button:disabled:hover {
-            background: #6b7d6a;
+            background: #c45a6e;
             transform: none;
         }
 
@@ -174,7 +229,7 @@ sh<!DOCTYPE html>
 
         .footer {
             font-size: 13px;
-            color: #999;
+            color: #d4a0aa;
             text-align: center;
             margin-top: 40px;
             font-weight: 300;
@@ -206,11 +261,86 @@ sh<!DOCTYPE html>
                 opacity: 1;
             }
         }
+
+        /* Floating hearts */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 18px;
+            color: #e0b0b8;
+            opacity: 0;
+            animation: floatHeart linear infinite;
+        }
+
+        .heart:nth-child(1)  { left: 5%;  font-size: 14px; animation: floatHeart1 12s linear infinite 0s; }
+        .heart:nth-child(2)  { left: 15%; font-size: 10px; animation: floatHeart2 14s linear infinite 1s; }
+        .heart:nth-child(3)  { left: 25%; font-size: 16px; animation: floatHeart3 11s linear infinite 3s; }
+        .heart:nth-child(4)  { left: 35%; font-size: 12px; animation: floatHeart1 15s linear infinite 0.5s; }
+        .heart:nth-child(5)  { left: 45%; font-size: 14px; animation: floatHeart2 13s linear infinite 4s; }
+        .heart:nth-child(6)  { left: 55%; font-size: 10px; animation: floatHeart3 12s linear infinite 2s; }
+        .heart:nth-child(7)  { left: 65%; font-size: 15px; animation: floatHeart1 14s linear infinite 5s; }
+        .heart:nth-child(8)  { left: 75%; font-size: 11px; animation: floatHeart2 11s linear infinite 1.5s; }
+        .heart:nth-child(9)  { left: 85%; font-size: 13px; animation: floatHeart3 13s linear infinite 3.5s; }
+        .heart:nth-child(10) { left: 92%; font-size: 10px; animation: floatHeart1 15s linear infinite 6s; }
+        .heart:nth-child(11) { left: 10%; font-size: 12px; animation: floatHeart2 12s linear infinite 7s; }
+        .heart:nth-child(12) { left: 40%; font-size: 14px; animation: floatHeart3 14s linear infinite 8s; }
+
+        @keyframes floatHeart1 {
+            0%   { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.25; }
+            50%  { transform: translateY(45vh) translateX(30px) rotate(15deg); }
+            90%  { opacity: 0.25; }
+            100% { transform: translateY(-10vh) translateX(-20px) rotate(-10deg); opacity: 0; }
+        }
+
+        @keyframes floatHeart2 {
+            0%   { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.2; }
+            35%  { transform: translateY(65vh) translateX(-25px) rotate(-12deg); }
+            70%  { transform: translateY(25vh) translateX(20px) rotate(18deg); }
+            90%  { opacity: 0.2; }
+            100% { transform: translateY(-10vh) translateX(10px) rotate(5deg); opacity: 0; }
+        }
+
+        @keyframes floatHeart3 {
+            0%   { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.22; }
+            25%  { transform: translateY(72vh) translateX(20px) rotate(10deg); }
+            50%  { transform: translateY(45vh) translateX(-15px) rotate(-8deg); }
+            75%  { transform: translateY(18vh) translateX(25px) rotate(20deg); }
+            90%  { opacity: 0.22; }
+            100% { transform: translateY(-10vh) translateX(-10px) rotate(-5deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
+    <div class="hearts">
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+        <span class="heart">&hearts;</span>
+    </div>
     <div class="container">
         <div class="card fade-enter">
+            <img class="card-image" id="cardImage" alt="">
             <div class="prompt" id="prompt">Press the button below to begin</div>
             <div class="answer" id="answer"></div>
         </div>
@@ -220,7 +350,7 @@ sh<!DOCTYPE html>
             <button id="revealBtn" class="secondary" disabled>Reveal</button>
         </div>
 
-        <div class="footer">made with love</div>
+        <div class="footer">made with love &hearts;</div>
     </div>
 
     <script>
@@ -260,7 +390,37 @@ sh<!DOCTYPE html>
             { id: 33, prompt: "What's something about Mali that makes you feel lucky?", answer: "she's a simple girl who makes me happy." },
             { id: 34, prompt: "If you had to describe Mali in three words, what are they—and why those?", answer: "unyielding, talkative, gorjus. i think this goes without explanation." },
             { id: 35, prompt: "What's something about Mali that makes you go \"how are you real\"?", answer: "she's beautiful, smart, hardworking, and silly all at once. how does that combination even exist." },
-            { id: 36, prompt: "What's one thing you love about Mali today?", answer: "her asking to sleep in just a little longer." }
+            { id: 36, prompt: "What's one thing you love about Mali today?", answer: "her asking to sleep in just a little longer." },
+            { id: 37, prompt: "What's a Mali reaction you could watch on repeat?", answer: "when she gets good food, she does this little happy wiggle. every time. and she knows she does it." },
+            { id: 38, prompt: "When does Mali completely lose her composure?", answer: "when she sees a cute animal. full-on squeal. zero shame. it's the purest thing." },
+            { id: 39, prompt: "When does Mali's protective side come out?", answer: "when someone she cares about is being treated unfairly. she won't just sit there. she'll step in, no hesitation." },
+            { id: 40, prompt: "What's your most niche hobby that involves Mali?", answer: "curating my 'mali standing' collection. she'll just be existing and somehow standing like a sim that got their path blocked." },
+            { id: 41, prompt: "What's something Mali does that makes your whole day?", answer: "when she's dressed up and sends a million snaps. i save every single one. for later." },
+            { id: 42, prompt: "What's the cutest thing Mali does on FaceTime?", answer: "she brings her forehead closer to the camera for a kiss. every time. it kills me." },
+            { id: 43, prompt: "What face does Mali make that absolutely sends you?", answer: "her mischievous face. she thinks she looks sneaky. she looks like an alien. i love it." },
+            { id: 44, prompt: "What's something about Mali you can always count on?", answer: "she cannot hide a single emotion. angry, excited, annoyed, happy — it's all right there on her face. no poker face. ever." },
+            { id: 45, prompt: "What's Mali's most lethal texting weapon?", answer: "her endless collection of cat reaction pics. for every situation. especially the angry ones. 'you don't love me so i go bye bye' with a sad cat attached. devastating." },
+            { id: 46, prompt: "What's something about Mali's brain that low-key blows your mind?", answer: "she speaks punjabi, english, spanish, and more. just casually. like it's nothing. it's not nothing. that's insane." },
+            { id: 47, prompt: "What's the funniest thing you see on FaceTime that Mali doesn't realize?", answer: "when she facetimes in the shower, all i see is her little forehead bobbing up and down. just a forehead. living its best life." },
+            { id: 48, prompt: "What's a Mali look that never fails to make you laugh?", answer: "the hair turban after a shower. she looks like a young punjabi boy. i will never not find this funny." },
+            { id: 49, prompt: "What's your ideal day with Mali?", answer: "eat something disgustingly good. then rot together on the couch. no plans. no moving. just us and food comas." },
+            { id: 50, prompt: "What's the secret to making Mali happy?", answer: "food. a snuggle. a kiss. that's it. that's the whole list. she's the simplest person to make happy and it's my favorite thing about her." },
+            { id: 51, prompt: "What's Mali's most non-negotiable daily ritual?", answer: "her addiction to an iced coffee, no matter how cold or how sick she is. whatever the state she will have one" },
+            { id: 52, prompt: "What's Mali's funniest contradiction?", answer: "her shyness around my family - she will steal our entire fridge but will not be ready to talk to my mom" },
+            { id: 53, prompt: "What happens when Mali sees a photo of herself?", answer: "her analysis on every photo that has her in it -- even if it is a couples photo shoot day, we better get good mali photos" },
+            { id: 54, prompt: "What's Mali's most adorable study ritual?", answer: "the joy she gets making her cheatsheets w all of her different colored writing utensils" },
+            { id: 55, prompt: "What makes even the boring parts of life better with Mali?", answer: "how she makes errands into adventures" },
+            { id: 56, prompt: "What's something about Mali's work ethic that impresses you every time?", answer: "the devotion she has to what's she doing, and the sheer amt of organization and planning she does towards it" },
+            { id: 57, image: "CDDCBD84-5EB4-465B-89A4-395CC7BD910C.JPG" },
+            { id: 58, image: "IMG_1831.JPG" },
+            { id: 59, image: "IMG_3991.jpg" },
+            { id: 60, image: "IMG_4911.JPG" },
+            { id: 61, image: "IMG_5870.JPG" },
+            { id: 62, image: "IMG_5881.JPG" },
+            { id: 63, image: "IMG_6102.jpg" },
+            { id: 64, image: "IMG_6218.jpg" },
+            { id: 65, image: "IMG_7667.jpg" },
+            { id: 66, image: "Photo on 1-3-25 at 3.56 PM.jpeg" }
         ];
 
         // State
@@ -271,6 +431,7 @@ sh<!DOCTYPE html>
         // Elements
         const promptEl = document.getElementById('prompt');
         const answerEl = document.getElementById('answer');
+        const cardImageEl = document.getElementById('cardImage');
         const nextPromptBtn = document.getElementById('nextPromptBtn');
         const revealBtn = document.getElementById('revealBtn');
         const cardEl = document.querySelector('.card');
@@ -321,12 +482,31 @@ sh<!DOCTYPE html>
                 answerEl.classList.remove('visible');
                 answerEl.textContent = '';
 
+                const isPhotoOnly = card.image && !card.prompt;
+
+                // Update image
+                if (card.image) {
+                    cardImageEl.src = 'images/' + card.image;
+                    cardImageEl.classList.add('visible');
+                    cardImageEl.classList.toggle('photo-only', isPhotoOnly);
+                } else {
+                    cardImageEl.classList.remove('visible', 'photo-only');
+                    cardImageEl.removeAttribute('src');
+                }
+
                 // Update prompt
-                promptEl.textContent = card.prompt;
+                promptEl.textContent = card.prompt || '';
+                promptEl.style.display = isPhotoOnly ? 'none' : '';
 
                 // Update button states
-                revealBtn.disabled = false;
-                nextPromptBtn.disabled = true;
+                if (isPhotoOnly) {
+                    revealBtn.style.display = 'none';
+                    nextPromptBtn.disabled = false;
+                } else {
+                    revealBtn.style.display = '';
+                    revealBtn.disabled = false;
+                    nextPromptBtn.disabled = true;
+                }
                 nextPromptBtn.textContent = 'Next question';
 
                 // Remove transition effect
